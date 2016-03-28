@@ -1,9 +1,9 @@
 {
-  "name": "NotelySeed",
+  "name": "Notely",
   "private": true,
-  "version": "0.5.0",
-  "description": "A starter project for an AngularJS 1.4 note-taking app.",
-  "repository": "git@github.com/getfretless/notely-seed.git",
+  "version": "0.1.0",
+  "description": "A note-taking app.",
+  "repository": "git@github.com:FretlessJS-2016-03/notely.git",
   "license": "MIT",
   "devDependencies": {
     "bower": "^1.7.7",
