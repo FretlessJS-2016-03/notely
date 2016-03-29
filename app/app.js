@@ -5,7 +5,7 @@
   ]);
 
   function notelyConfig($urlRouterProvider) {
-    $urlRouterProvider.otherwise('/notes');
+    $urlRouterProvider.otherwise('/notes/');
   }
 
   notelyConfig.$inject = ['$urlRouterProvider'];
