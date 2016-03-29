@@ -10,7 +10,7 @@
 
       .state('notes', {
         url: '/notes',
-        template: '<h1>Notely</h1><p>{{ message }}</p><div ui-view></div>',
+        templateUrl: '/notes/notes.html',
         controller: NotesController
       })
 
