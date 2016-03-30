@@ -27,6 +27,15 @@
       $scope.notes = NotesService.getNotes();
     });
 
+    $scope.note = {
+      title: 'Static note',
+      body_html: 'Something something something.'
+    };
+
+    $scope.save = function() {
+      console.log($scope.note.title);
+    };
+
     $state.go('notes.form');
   }
 })();
