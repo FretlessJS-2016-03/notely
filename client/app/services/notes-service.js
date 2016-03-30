@@ -5,6 +5,8 @@
   NotesService.$inject = ['$http'];
   function NotesService($http) {
     var _this = this;
+    _this.notes = [];
+
     _this.fetch = function(callback) {
       $http.get('http://localhost:3030')
         .success(function(notesData) {
