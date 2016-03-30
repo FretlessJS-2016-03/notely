@@ -25,5 +25,13 @@
     _this.getNotes = function() {
       return _this.notes;
     };
+
+    _this.create = function(note) {
+      return $http.post('http://localhost:3030/notes', {
+        note: note
+      }).then(function(response) {
+        _this.notes.unshift(response.data.note);
+      });
+    };
   }
 }());
