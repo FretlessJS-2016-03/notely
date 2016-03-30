@@ -1,15 +1,6 @@
 var express = require('express');
 var notelyServerApp = express();
-
-var db = require('mongoose');
-db.connect('mongodb://localhost:27017/notely');
-
-var NoteSchema = db.Schema({
-  title: String,
-  body_html: String
-});
-
-var Note = db.model('Note', NoteSchema);
+var Note = require('./models/note');
 
 // Cross-Origin Resource Sharing (CORS) middleware
 notelyServerApp.use(function(req, res, next) {

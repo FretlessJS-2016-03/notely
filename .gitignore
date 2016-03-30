@@ -6,4 +6,4 @@ tmp
 .DS_Store
 Thumbs.db
 .idea
-npm-debug-log.log
+npm-debug.log
