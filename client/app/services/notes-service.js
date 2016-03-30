@@ -8,7 +8,7 @@
     _this.notes = [];
 
     _this.fetch = function() {
-      return $http.get('http://localhost:3030')
+      return $http.get('http://localhost:3030/notes')
         .then(
           // Success
           function(response) {
