@@ -7,11 +7,10 @@
     var _this = this;
     _this.notes = [];
 
-    _this.fetch = function(callback) {
-      $http.get('http://localhost:3030')
+    _this.fetch = function() {
+      return $http.get('http://localhost:3030')
         .success(function(notesData) {
           _this.notes = notesData;
-          callback();
         });
     };
 

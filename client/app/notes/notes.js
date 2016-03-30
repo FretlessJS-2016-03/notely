@@ -22,9 +22,11 @@
 
   NotesController.$inject = ['$scope', '$state', 'NotesService'];
   function NotesController($scope, $state, NotesService) {
-    NotesService.fetch(function() {
+
+    NotesService.fetch().success(function() {
       $scope.notes = NotesService.getNotes();
     });
+
     $state.go('notes.form');
   }
 })();
