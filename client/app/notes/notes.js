@@ -11,7 +11,12 @@
       .state('notes', {
         url: '/notes',
         templateUrl: '/notes/notes.html',
-        controller: NotesController
+        controller: NotesController,
+        resolve: {
+          notesLoaded: function(NotesService) {
+            return NotesService.fetch();
+          }
+        }
       })
 
       .state('notes.form', {
@@ -22,12 +27,8 @@
 
   NotesController.$inject = ['$scope', '$state', 'NotesService'];
   function NotesController($scope, $state, NotesService) {
-    $scope.note = {};
-
-    NotesService.fetch().then(function() {
-      $scope.notes = NotesService.getNotes();
-      $scope.note = NotesService.findById($state.params.noteId);
-    });
+    $scope.notes = NotesService.getNotes();
+    $scope.note = NotesService.findById($state.params.noteId);
 
     $scope.save = function() {
       NotesService.create($scope.note);
