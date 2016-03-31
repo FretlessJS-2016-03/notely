@@ -2,13 +2,13 @@
   angular.module('notely')
     .service('NotesService', NotesService);
 
-  NotesService.$inject = ['$http'];
-  function NotesService($http) {
+  NotesService.$inject = ['$http', 'API_BASE'];
+  function NotesService($http, API_BASE) {
     var _this = this;
     _this.notes = [];
 
     _this.fetch = function() {
-      return $http.get('http://localhost:3030/notes')
+      return $http.get(API_BASE + 'notes')
         .then(
           // Success
           function(response) {
@@ -27,7 +27,7 @@
     };
 
     _this.create = function(note) {
-      var creationPromise = $http.post('http://localhost:3030/notes', {
+      var creationPromise = $http.post(API_BASE + 'notes', {
         note: note
       });
 
@@ -39,7 +39,7 @@
     };
 
     _this.update = function(note) {
-      return $http.put('http://localhost:3030/notes/' + note._id, {
+      return $http.put(API_BASE + 'notes/' + note._id, {
         note: {
           title: note.title,
           body_html: note.body_html
@@ -50,7 +50,7 @@
     };
 
     _this.delete = function(note) {
-      return $http.delete('http://localhost:3030/notes/' + note._id
+      return $http.delete(API_BASE + 'notes/' + note._id
       ).then(function(response) {
         _this.removeNote(response.data.note);
       });

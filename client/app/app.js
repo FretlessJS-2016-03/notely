@@ -10,4 +10,6 @@
 
   notelyConfig.$inject = ['$urlRouterProvider'];
   notelyApp.config(notelyConfig);
+
+  notelyApp.constant('API_BASE', 'http://localhost:3030/');
 })();
