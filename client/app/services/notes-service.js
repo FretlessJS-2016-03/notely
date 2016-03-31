@@ -27,11 +27,15 @@
     };
 
     _this.create = function(note) {
-      return $http.post('http://localhost:3030/notes', {
+      var creationPromise = $http.post('http://localhost:3030/notes', {
         note: note
-      }).then(function(response) {
+      });
+
+      creationPromise.then(function(response) {
         _this.notes.unshift(response.data.note);
       });
+
+      return creationPromise;
     };
 
     _this.update = function(note) {
