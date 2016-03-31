@@ -1,3 +1,4 @@
+require('dotenv').load();
 var express = require('express');
 var notelyServerApp = express();
 var Note = require('./models/note');
