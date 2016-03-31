@@ -26,6 +26,7 @@
 
     NotesService.fetch().then(function() {
       $scope.notes = NotesService.getNotes();
+      $scope.note = NotesService.findById($state.params.noteId);
     });
 
     $scope.save = function() {
