@@ -21,23 +21,22 @@
 
       .state('notes.form', {
         url: '/:noteId',
-        templateUrl: '/notes/notes-form.html'
+        templateUrl: '/notes/notes-form.html',
+        controller: NotesFormController
       });
   }
 
   NotesController.$inject = ['$scope', '$state', 'NotesService'];
   function NotesController($scope, $state, NotesService) {
     $scope.notes = NotesService.getNotes();
-    $scope.note = NotesService.findById($state.params.noteId);
+    $state.go('notes.form');
+  }
 
+  NotesFormController.$inject = ['$scope', '$state', 'NotesService'];
+  function NotesFormController($scope, $state, NotesService) {
+    $scope.note = NotesService.findById($state.params.noteId);
     $scope.save = function() {
       NotesService.create($scope.note);
     };
-
-    $scope.clearForm = function() {
-      $scope.note = {};
-    };
-
-    $state.go('notes.form');
   }
 })();
