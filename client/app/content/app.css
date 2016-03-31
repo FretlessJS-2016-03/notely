@@ -77,8 +77,11 @@ ul#notes {
       font-size: 120%;
       font-weight: 300; }
     ul#notes li .note-body {
+      color: #999;
       height: 54px;
       overflow: hidden; }
+    ul#notes li:hover .note-body {
+      color: white; }
     ul#notes li a.note {
       display: block;
       height: 100px;
