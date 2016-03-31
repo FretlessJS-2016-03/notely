@@ -8,11 +8,16 @@
       placeholder="Title your note">
   </p>
   <p>
-    <textarea
+    <text-angular
       ng-model="note.body_html"
       name="body_html"
       placeholder="Just start typing..."
-      ></textarea>
+      ta-toolbar="[
+        ['bold', 'italics', 'underline'],
+        ['ul', 'ol', 'indent', 'outdent'],
+        ['html'],
+        ['insertLink']]"
+      ></text-angular>
   </p>
   <div class="form-actions">
     <input
