@@ -8,12 +8,18 @@
   "devDependencies": {
     "bower": "^1.7.7",
     "eslint": "^2.5.3",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-concat": "^2.6.0",
+    "gulp-connect": "^3.2.2",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sourcemaps": "^1.6.0",
     "http-server": "^0.6.1"
   },
   "scripts": {
-    "start": "http-server app -a 0.0.0.0 -p 8080 -c-1",
+    "start": "node_modules/.bin/gulp",
     "prestart": "npm install",
-    "postinstall": "bower install",
+    "postinstall": "node_modules/.bin/bower install",
     "preupdate-webdriver": "npm install"
   }
 }
