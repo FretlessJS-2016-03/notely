@@ -18,7 +18,7 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-angular.module('notely').directive('signUp', function () {
+angular.module('notely').directive('signUp', ['UsersService', function (UsersService) {
   var SignUpController = (function () {
     function SignUpController() {
       _classCallCheck(this, SignUpController);
@@ -29,7 +29,7 @@ angular.module('notely').directive('signUp', function () {
     _createClass(SignUpController, [{
       key: 'submit',
       value: function submit() {
-        console.log(this.user);
+        UsersService.create(this.user);
       }
     }]);
 
@@ -42,7 +42,7 @@ angular.module('notely').directive('signUp', function () {
     controllerAs: 'ctrl',
     templateUrl: '/components/sign-up.html'
   };
-});
+}]);
 'use strict';
 
 (function () {
@@ -91,6 +91,19 @@ angular.module('notely').directive('signUp', function () {
     };
   }
 })();
+'use strict';
+
+{
+  var usersConfig = function usersConfig($stateProvider) {
+    $stateProvider.state('sign-up', {
+      url: '/sign-up',
+      template: '<sign-up></sign-up>'
+    });
+  };
+  usersConfig.$inject = ['$stateProvider'];
+
+  angular.module('notely').config(usersConfig);
+}
 'use strict';
 
 (function () {
@@ -178,15 +191,32 @@ angular.module('notely').directive('signUp', function () {
 })();
 'use strict';
 
-{
-  var usersConfig = function usersConfig($stateProvider) {
-    $stateProvider.state('sign-up', {
-      url: '/sign-up',
-      template: '<sign-up></sign-up>'
-    });
-  };
-  usersConfig.$inject = ['$stateProvider'];
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-  angular.module('notely').config(usersConfig);
-}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+angular.module('notely').service('UsersService', ['$http', 'API_BASE', function ($http, API_BASE) {
+  var UsersService = (function () {
+    function UsersService() {
+      _classCallCheck(this, UsersService);
+    }
+
+    _createClass(UsersService, [{
+      key: 'create',
+      value: function create(user) {
+        var userPromise = $http.post(API_BASE + 'users', {
+          user: user
+        });
+        userPromise.then(function (response) {
+          console.log(response.data.user);
+        });
+        return userPromise;
+      }
+    }]);
+
+    return UsersService;
+  })();
+
+  return new UsersService();
+}]);
 //# sourceMappingURL=bundle.js.map
