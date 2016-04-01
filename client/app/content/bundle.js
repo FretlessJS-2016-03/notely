@@ -79,7 +79,7 @@
 
       // Failure
       function (response) {
-        console.log('aww, snap:' + response);
+        console.log('aww, snap: ' + response);
       });
     };
 

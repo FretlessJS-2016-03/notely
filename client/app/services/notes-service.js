@@ -8,7 +8,7 @@
     _this.notes = [];
 
     _this.fetch = function() {
-      return $http.get(API_BASE + 'notes')
+      return $http.get(`${API_BASE}notes`)
         .then(
           // Success
           function(response) {
@@ -17,7 +17,7 @@
 
           // Failure
           function(response) {
-            console.log('aww, snap:' + response);
+            console.log(`aww, snap: ${response}`);
           }
         );
     };
@@ -27,7 +27,7 @@
     };
 
     _this.create = function(note) {
-      var creationPromise = $http.post(API_BASE + 'notes', {
+      var creationPromise = $http.post(`${API_BASE}notes`, {
         note: note
       });
 
@@ -39,7 +39,7 @@
     };
 
     _this.update = function(note) {
-      return $http.put(API_BASE + 'notes/' + note._id, {
+      return $http.put(`${API_BASE}notes/${note._id}`, {
         note: {
           title: note.title,
           body_html: note.body_html
@@ -50,7 +50,7 @@
     };
 
     _this.delete = function(note) {
-      return $http.delete(API_BASE + 'notes/' + note._id
+      return $http.delete(`${API_BASE}notes/${note._id}`
       ).then(function(response) {
         _this.removeNote(response.data.note);
       });
