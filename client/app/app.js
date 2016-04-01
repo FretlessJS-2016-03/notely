@@ -1,5 +1,5 @@
 (function() {
-  var notelyApp = angular.module('notely', [
+  let notelyApp = angular.module('notely', [
     'ui.router',
     'notely.notes'
   ]);

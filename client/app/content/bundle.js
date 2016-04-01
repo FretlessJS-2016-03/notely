@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
   var notelyApp = angular.module('notely', ['ui.router', 'notely.notes']);
 
@@ -10,6 +12,8 @@
 
   notelyApp.constant('API_BASE', 'http://localhost:3030/');
 })();
+'use strict';
+
 (function () {
   angular.module('notely.notes', ['ui.router', 'textAngular']).config(notesConfig);
 
@@ -20,7 +24,7 @@
       templateUrl: '/notes/notes.html',
       controller: NotesController,
       resolve: {
-        notesLoaded: function (NotesService) {
+        notesLoaded: function notesLoaded(NotesService) {
           return NotesService.fetch();
         }
       }
@@ -49,13 +53,15 @@
         });
       }
     };
-    $scope.delete = function () {
-      NotesService.delete($scope.note).then(function () {
+    $scope['delete'] = function () {
+      NotesService['delete']($scope.note).then(function () {
         $state.go('notes.form', { noteId: undefined });
       });
     };
   }
 })();
+'use strict';
+
 (function () {
   angular.module('notely').service('NotesService', NotesService);
 
@@ -104,8 +110,8 @@
       });
     };
 
-    _this.delete = function (note) {
-      return $http.delete(API_BASE + 'notes/' + note._id).then(function (response) {
+    _this['delete'] = function (note) {
+      return $http['delete'](API_BASE + 'notes/' + note._id).then(function (response) {
         _this.removeNote(response.data.note);
       });
     };

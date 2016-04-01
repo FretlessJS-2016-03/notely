@@ -6,10 +6,11 @@
   "repository": "https://github.com/FretlessJS-2016-03/notely.git",
   "license": "MIT",
   "devDependencies": {
+    "babel-eslint": "^6.0.2",
     "bower": "^1.7.7",
     "eslint": "^2.5.3",
     "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
+    "gulp-babel": "^5.3.0",
     "gulp-concat": "^2.6.0",
     "gulp-connect": "^3.2.2",
     "gulp-plumber": "^1.1.0",
