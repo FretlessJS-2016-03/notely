@@ -1,6 +1,18 @@
 angular.module('notely')
-  .directive('signUp', function() {
+  .directive('signUp', () => {
+    class SignUpController {
+      constructor() {
+        this.user = {};
+      }
+      submit() {
+        console.log(this.user);
+      }
+    }
+
     return {
+      scope: {},
+      controller: SignUpController,
+      controllerAs: 'ctrl',
       templateUrl: '/components/sign-up.html'
     };
   });
