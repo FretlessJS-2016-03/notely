@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 notelyServerApp.use(bodyParser.json());
 
 notelyServerApp.use(require('./middleware/headers'));
+notelyServerApp.use(require('./middleware/add-user-to-request'));
 
 // Routes
 notelyServerApp.use('/notes', require('./routes/note-routes.js'));
