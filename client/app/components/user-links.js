@@ -31,7 +31,7 @@ angular.module('notely')
           <div ng-show="ctrl.signedIn()">
             Signed in as {{ ctrl.user().name }}
             |
-            <a href="#" ng-click="ctrl.logout()">Logout</a>
+            <a ui-sref="sign-in" ng-click="ctrl.logout()">Logout</a>
           </div>
         </div>
       `
