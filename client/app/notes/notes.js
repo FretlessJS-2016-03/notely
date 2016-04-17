@@ -14,9 +14,27 @@
         templateUrl: '/notes/notes.html',
         controller: NotesController,
         resolve: {
-          notesLoaded: function(NotesService) {
-            return NotesService.fetch();
-          }
+          userAuthenticated: [
+            '$state', '$q', '$timeout', 'CurrentUser',
+            function($state, $q, $timeout, CurrentUser) {
+              let deferred = $q.defer();
+              $timeout(function() {
+                if (CurrentUser.isSignedIn()) {
+                  deferred.resolve();
+                }
+                else {
+                  deferred.reject();
+                  $state.go('sign-in');
+                }
+              });
+            }
+          ],
+          notesLoaded: [
+            'NotesService', 'userAuthenticated',
+            function(NotesService, _userAuthenticated) {
+              return NotesService.fetch();
+            }
+          ]
         }
       })
 
