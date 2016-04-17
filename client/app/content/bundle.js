@@ -53,9 +53,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 angular.module('notely').directive('userLinks', function () {
   var UserLinksController = (function () {
-    function UserLinksController(CurrentUser) {
+    function UserLinksController(AuthToken, CurrentUser) {
       _classCallCheck(this, UserLinksController);
 
+      this.AuthToken = AuthToken;
       this.CurrentUser = CurrentUser;
     }
 
@@ -69,19 +70,25 @@ angular.module('notely').directive('userLinks', function () {
       value: function signedIn() {
         return !!this.user()._id;
       }
+    }, {
+      key: 'logout',
+      value: function logout() {
+        this.CurrentUser.clear();
+        this.AuthToken.clear();
+      }
     }]);
 
     return UserLinksController;
   })();
 
-  UserLinksController.$inject = ['CurrentUser'];
+  UserLinksController.$inject = ['AuthToken', 'CurrentUser'];
 
   return {
     scope: {},
     controller: UserLinksController,
     controllerAs: 'ctrl',
     bindToController: true,
-    template: '\n        <div class="user-links">\n          <div ng-show="ctrl.signedIn()">\n            Signed in as {{ ctrl.user().name }}\n            |\n            <a href="#">Logout</a>\n          </div>\n        </div>\n      '
+    template: '\n        <div class="user-links">\n          <div ng-show="ctrl.signedIn()">\n            Signed in as {{ ctrl.user().name }}\n            |\n            <a href="#" ng-click="ctrl.logout()">Logout</a>\n          </div>\n        </div>\n      '
   };
 });
 'use strict';

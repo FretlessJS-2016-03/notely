@@ -1,7 +1,8 @@
 angular.module('notely')
   .directive('userLinks', () => {
     class UserLinksController {
-      constructor(CurrentUser) {
+      constructor(AuthToken, CurrentUser) {
+        this.AuthToken = AuthToken;
         this.CurrentUser = CurrentUser;
       }
 
@@ -12,8 +13,13 @@ angular.module('notely')
       signedIn() {
         return !!(this.user()._id);
       }
+
+      logout() {
+        this.CurrentUser.clear();
+        this.AuthToken.clear();
+      }
     }
-    UserLinksController.$inject = ['CurrentUser'];
+    UserLinksController.$inject = ['AuthToken', 'CurrentUser'];
 
     return {
       scope: {},
@@ -25,7 +31,7 @@ angular.module('notely')
           <div ng-show="ctrl.signedIn()">
             Signed in as {{ ctrl.user().name }}
             |
-            <a href="#">Logout</a>
+            <a href="#" ng-click="ctrl.logout()">Logout</a>
           </div>
         </div>
       `
