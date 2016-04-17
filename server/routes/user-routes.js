@@ -14,7 +14,7 @@ router.post('/', function(req, res) {
 
   user.save().then(function(userData) {
     var token = jwt.sign(
-      userData._id,
+      { _id: userData._id },
       process.env.JWT_SECRET,
       { expiresIn: 24 * 60 * 60 });
     res.json({

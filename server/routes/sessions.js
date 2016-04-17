@@ -12,9 +12,11 @@ router.post('/', function(req, res) {
           res.json({
             message: 'Welcome back!',
             user: user,
-            auth_token: jwt.sign(user._id, process.env.JWT_SECRET, {
-              expiresIn: 60*60*24
-            })
+            auth_token: jwt.sign(
+              { _id: user._id },
+              process.env.JWT_SECRET,
+              { expiresIn: 60*60*24 }
+            )
           });
         }
         else {
