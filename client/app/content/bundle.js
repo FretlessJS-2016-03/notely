@@ -131,6 +131,44 @@ angular.module('notely').service('AuthToken', ['$window', function ($window) {
 }]);
 'use strict';
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+angular.module('notely').service('CurrentUser', ['$window', function ($window) {
+  var CurrentUser = (function () {
+    function CurrentUser() {
+      _classCallCheck(this, CurrentUser);
+
+      this.currentUser = JSON.parse($window.localStorage.getItem('currentUser'));
+    }
+
+    _createClass(CurrentUser, [{
+      key: 'set',
+      value: function set(user) {
+        this.currentUser = user;
+        $window.localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+      }
+    }, {
+      key: 'get',
+      value: function get() {
+        return this.currentUser || {};
+      }
+    }, {
+      key: 'clear',
+      value: function clear() {
+        this.currentUser = undefined;
+        $window.localStorage.removeItem('currentUser');
+      }
+    }]);
+
+    return CurrentUser;
+  })();
+
+  return new CurrentUser();
+}]);
+'use strict';
+
 (function () {
   angular.module('notely').service('NotesService', NotesService);
 
@@ -220,7 +258,7 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-angular.module('notely').service('UsersService', ['$http', 'API_BASE', 'AuthToken', function ($http, API_BASE, AuthToken) {
+angular.module('notely').service('UsersService', ['$http', 'API_BASE', 'AuthToken', 'CurrentUser', function ($http, API_BASE, AuthToken, CurrentUser) {
   var UsersService = (function () {
     function UsersService() {
       _classCallCheck(this, UsersService);
@@ -234,6 +272,7 @@ angular.module('notely').service('UsersService', ['$http', 'API_BASE', 'AuthToke
         });
         userPromise.then(function (response) {
           AuthToken.set(response.data.auth_token);
+          CurrentUser.set(response.data.user);
         });
         return userPromise;
       }
