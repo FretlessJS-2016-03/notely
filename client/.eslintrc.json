@@ -32,6 +32,10 @@
         ],
         "no-implicit-globals": [
           "error"
+        ],
+        "no-unused-vars": [
+          "error",
+          { "argsIgnorePattern": "^_" }
         ]
     }
 }
