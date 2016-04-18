@@ -1,4 +1,4 @@
-<form ng-submit="save()">
+<form id="notes_form" ng-submit="save()">
   <p>
     <input
       ng-model="note.title"
@@ -28,5 +28,7 @@
     <a ng-click="delete()" ng-show="note._id">
       <i class="fa fa-trash-o"></i>
     </a>
+
+    <flash-message duration="5000" show-close="true"></flash-message>
   </div>
 </form>
