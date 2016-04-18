@@ -18,7 +18,7 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-angular.module('notely').directive('signIn', ['$state', 'UsersService', function ($state, UsersService) {
+angular.module('notely').directive('signIn', ['$state', 'Flash', 'UsersService', function ($state, Flash, UsersService) {
   var SignInController = (function () {
     function SignInController() {
       _classCallCheck(this, SignInController);
@@ -31,6 +31,8 @@ angular.module('notely').directive('signIn', ['$state', 'UsersService', function
       value: function login() {
         UsersService.login(this.user).then(function (_response) {
           $state.go('notes.form', { noteId: undefined });
+        }, function (response) {
+          Flash.create('danger', response.data.message);
         });
       }
     }]);
@@ -191,6 +193,22 @@ angular.module('notely').directive('userLinks', function () {
     };
   }
 })();
+'use strict';
+
+{
+  var usersConfig = function usersConfig($stateProvider) {
+    $stateProvider.state('sign-up', {
+      url: '/sign-up',
+      template: '<sign-up></sign-up>'
+    }).state('sign-in', {
+      url: '/sign-in',
+      template: '<sign-in></sign-in>'
+    });
+  };
+  usersConfig.$inject = ['$stateProvider'];
+
+  angular.module('notely').config(usersConfig);
+}
 'use strict';
 
 angular.module('notely').factory('AuthInterceptor', ['AuthToken', 'API_BASE', function (AuthToken, API_BASE) {
@@ -416,20 +434,4 @@ angular.module('notely').service('UsersService', ['$http', 'API_BASE', 'AuthToke
 
   return new UsersService();
 }]);
-'use strict';
-
-{
-  var usersConfig = function usersConfig($stateProvider) {
-    $stateProvider.state('sign-up', {
-      url: '/sign-up',
-      template: '<sign-up></sign-up>'
-    }).state('sign-in', {
-      url: '/sign-in',
-      template: '<sign-in></sign-in>'
-    });
-  };
-  usersConfig.$inject = ['$stateProvider'];
-
-  angular.module('notely').config(usersConfig);
-}
 //# sourceMappingURL=bundle.js.map

@@ -1,5 +1,5 @@
 angular.module('notely')
-  .directive('signIn', ['$state', 'UsersService', ($state, UsersService) => {
+  .directive('signIn', ['$state', 'Flash', 'UsersService', ($state, Flash, UsersService) => {
 
     class SignInController {
       constructor() {
@@ -10,6 +10,9 @@ angular.module('notely')
         UsersService.login(this.user)
           .then(function(_response) {
             $state.go('notes.form', { noteId: undefined });
+          },
+          function(response) {
+            Flash.create('danger', response.data.message);
           });
       }
     }

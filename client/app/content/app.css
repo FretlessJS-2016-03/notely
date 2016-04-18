@@ -116,3 +116,6 @@ span.login {
   padding-top: 8px;
   padding-bottom: 8px;
 }
+#new_user .alert {
+  margin-top: 10px;
+}
