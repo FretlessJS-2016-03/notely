@@ -13,11 +13,6 @@
           // Success
           function(response) {
             _this.notes = response.data;
-          },
-
-          // Failure
-          function(response) {
-            console.log(`aww, snap: ${response}`);
           }
         );
     };
@@ -39,14 +34,18 @@
     };
 
     _this.update = function(note) {
-      return $http.put(`${API_BASE}notes/${note._id}`, {
+      var updatePromise = $http.put(`${API_BASE}notes/${note._id}`, {
         note: {
           title: note.title,
           body_html: note.body_html
         }
-      }).then(function(response) {
+      });
+
+      updatePromise.then(function(response) {
         _this.replaceNote(response.data.note);
       });
+
+      return updatePromise;
     };
 
     _this.delete = function(note) {

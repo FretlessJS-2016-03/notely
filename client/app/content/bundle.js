@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var notelyApp = angular.module('notely', ['ui.router', 'notely.notes']);
+  var notelyApp = angular.module('notely', ['ui.router', 'notely.notes', 'ngFlash']);
 
   function notelyConfig($urlRouterProvider) {
     $urlRouterProvider.otherwise('/notes/');
@@ -128,7 +128,7 @@ angular.module('notely').directive('userLinks', function () {
 'use strict';
 
 (function () {
-  angular.module('notely.notes', ['ui.router', 'textAngular']).config(notesConfig);
+  angular.module('notely.notes', ['ui.router', 'textAngular', 'ngFlash']).config(notesConfig);
 
   notesConfig.$inject = ['$stateProvider'];
   function notesConfig($stateProvider) {
@@ -165,15 +165,22 @@ angular.module('notely').directive('userLinks', function () {
     $state.go('notes.form');
   }
 
-  NotesFormController.$inject = ['$scope', '$state', 'NotesService'];
-  function NotesFormController($scope, $state, NotesService) {
+  NotesFormController.$inject = ['$scope', '$state', 'Flash', 'NotesService'];
+  function NotesFormController($scope, $state, Flash, NotesService) {
     $scope.note = NotesService.findById($state.params.noteId);
     $scope.save = function () {
       if ($scope.note._id) {
-        NotesService.update($scope.note);
+        NotesService.update($scope.note).then(function (response) {
+          Flash.create('success', response.data.message);
+        }, function (response) {
+          Flash.create('danger', response.data.message);
+        });
       } else {
         NotesService.create($scope.note).then(function (response) {
           $state.go('notes.form', { noteId: response.data.note._id });
+          Flash.create('success', response.data.message);
+        }, function (response) {
+          Flash.create('danger', response.data.message);
         });
       }
     };
@@ -297,11 +304,6 @@ angular.module('notely').service('CurrentUser', ['$window', function ($window) {
       // Success
       function (response) {
         _this.notes = response.data;
-      },
-
-      // Failure
-      function (response) {
-        console.log('aww, snap: ' + response);
       });
     };
 
@@ -322,14 +324,18 @@ angular.module('notely').service('CurrentUser', ['$window', function ($window) {
     };
 
     _this.update = function (note) {
-      return $http.put(API_BASE + 'notes/' + note._id, {
+      var updatePromise = $http.put(API_BASE + 'notes/' + note._id, {
         note: {
           title: note.title,
           body_html: note.body_html
         }
-      }).then(function (response) {
+      });
+
+      updatePromise.then(function (response) {
         _this.replaceNote(response.data.note);
       });
+
+      return updatePromise;
     };
 
     _this['delete'] = function (note) {

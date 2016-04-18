@@ -52,17 +52,28 @@
     $state.go('notes.form');
   }
 
-  NotesFormController.$inject = ['$scope', '$state', 'NotesService'];
-  function NotesFormController($scope, $state, NotesService) {
+  NotesFormController.$inject = ['$scope', '$state', 'Flash', 'NotesService'];
+  function NotesFormController($scope, $state, Flash, NotesService) {
     $scope.note = NotesService.findById($state.params.noteId);
     $scope.save = function() {
       if ($scope.note._id) {
-        NotesService.update($scope.note);
+        NotesService.update($scope.note)
+          .then(function(response) {
+            Flash.create('success', response.data.message);
+          },
+          function(response) {
+            Flash.create('danger', response.data.message);
+          });
       }
       else {
-        NotesService.create($scope.note).then(function(response) {
-          $state.go('notes.form', { noteId: response.data.note._id });
-        });
+        NotesService.create($scope.note)
+          .then(function(response) {
+            $state.go('notes.form', { noteId: response.data.note._id });
+            Flash.create('success', response.data.message);
+          },
+          function(response) {
+            Flash.create('danger', response.data.message);
+          });
       }
     };
     $scope.delete = function() {
