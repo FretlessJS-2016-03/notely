@@ -1,7 +1,8 @@
 (function() {
   angular.module('notely.notes', [
     'ui.router',
-    'textAngular'
+    'textAngular',
+    'ngFlash'
   ])
   .config(notesConfig);
 
