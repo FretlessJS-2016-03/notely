@@ -195,22 +195,6 @@ angular.module('notely').directive('userLinks', function () {
 })();
 'use strict';
 
-{
-  var usersConfig = function usersConfig($stateProvider) {
-    $stateProvider.state('sign-up', {
-      url: '/sign-up',
-      template: '<sign-up></sign-up>'
-    }).state('sign-in', {
-      url: '/sign-in',
-      template: '<sign-in></sign-in>'
-    });
-  };
-  usersConfig.$inject = ['$stateProvider'];
-
-  angular.module('notely').config(usersConfig);
-}
-'use strict';
-
 angular.module('notely').factory('AuthInterceptor', ['AuthToken', 'API_BASE', function (AuthToken, API_BASE) {
   return {
     request: function request(config) {
@@ -434,4 +418,20 @@ angular.module('notely').service('UsersService', ['$http', 'API_BASE', 'AuthToke
 
   return new UsersService();
 }]);
+'use strict';
+
+{
+  var usersConfig = function usersConfig($stateProvider) {
+    $stateProvider.state('sign-up', {
+      url: '/sign-up',
+      template: '<sign-up></sign-up>'
+    }).state('sign-in', {
+      url: '/sign-in',
+      template: '<sign-in></sign-in>'
+    });
+  };
+  usersConfig.$inject = ['$stateProvider'];
+
+  angular.module('notely').config(usersConfig);
+}
 //# sourceMappingURL=bundle.js.map
